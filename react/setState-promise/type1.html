@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useRef } = React;
+      function Cmp() {
+        const [a, setA] = useState("a");
+        const ref = useRef(0);
+        ref.current += 1;
+        console.log("render", ref.current, a);
+        function modify() {
+          setA((v) => {
+            return v + 1;
+          });
+        }
+        return (
+          <div>
+            A: {a}
+            <button
+              onClick={() => {
+                setTimeout(() => {
+                  modify();
+                  modify();
+                  modify();
+                  modify();
+                }, 0);
+              }}
+            >
+              修改
+            </button>
+          </div>
+        );
+      }
+      ReactDOM.render(<Cmp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
