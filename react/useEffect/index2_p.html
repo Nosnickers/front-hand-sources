@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <script src="../js/immutable.4.0.0.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // setState变量无限循环
+      console.time("time");
+      const { useEffect, useState, useRef } = React;
+
+      function useHks(props) {
+        const [a, setA] = useState(props);
+        useEffect(() => {
+          setA(props)
+        }, [a])
+        return a
+      }
+
+
+      function Cmp() {
+        console.log("======== begin of Cmp ========");
+        const a = useHks({ a: 3 })
+        useEffect(() => {
+          console.log('a', a);
+        }, [a])
+        console.log("******** end of Cmp ********");
+        return (
+          <div>
+            <span>{`${a?.a}`}</span>
+            <ul>
+              {Array.from({ length: 2e3 }).map((_, i) => (
+                <li key={i}>
+                  {i}---{a?.a}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+      ReactDOM.render(<Cmp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
