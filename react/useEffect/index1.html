@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // useEffect的执行次序； 
+      console.time("time");
+      const { useEffect, useState, useRef } = React;
+      function Cmp() {
+        console.log("======== begin of Cmp ========");
+        const [a, setA] = useState(1);
+        const aRef = useRef();
+        console.timeLog("time");
+        console.log("?", JSON.stringify(aRef.current?.innerText));
+        
+        useEffect(() => {
+          console.timeLog("time");
+          // console.log("useEffect setA");
+          // // console.log('没有问号 setA 前', JSON.stringify(aRef.current.innerText));
+          // setA(333);
+          // console.log('没有问号 setA 后', JSON.stringify(aRef.current.innerText));
+        }, [a]);
+
+        setTimeout(() => {
+          console.log("cmp setA");
+          setA(333);
+        }, 0);
+
+        console.log("******** end of Cmp ********");
+        return (
+          <div>
+            <span ref={aRef}>{a}</span>
+            <ul>
+              {Array.from({ length: 2e3 }).map((_, i) => (
+                <li key={i}>
+                  {i}---{a}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+      ReactDOM.render(<Cmp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

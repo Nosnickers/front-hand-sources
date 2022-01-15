@@ -13,33 +13,26 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      const { useState } = React;
+      // setState变量无限循环
+      console.time("time");
+      const { useEffect, useState, useRef } = React;
       function Cmp() {
-        const [a, setA] = useState("a");
-        const [b, setB] = useState("b");
-        const [c, setC] = useState("c");
-        console.log("render", a, b, c);
-        function modify() {
-          setA((v) => {
-            return v + 1;
-          });
-          setB((v) => v + 1);
-          setC((v) => v + 1);
-        }
+        console.log("======== begin of Cmp ========");
+        const [a, setA] = useState({ a: 3 });
+        useEffect(() => {
+          setA({ a: 3 });
+        }, [a]);
+        console.log("******** end of Cmp ********");
         return (
           <div>
-            A: {a} {"   "}
-            B: {b} {"   "}
-            C: {c}
-            <button
-              onClick={() => {
-                Promise.resolve().then(() => {
-                  modify();
-                });
-              }}
-            >
-              修改
-            </button>
+            <span>{`${a?.a}`}</span>
+            <ul>
+              {Array.from({ length: 2e3 }).map((_, i) => (
+                <li key={i}>
+                  {i}---{a?.a}
+                </li>
+              ))}
+            </ul>
           </div>
         );
       }
