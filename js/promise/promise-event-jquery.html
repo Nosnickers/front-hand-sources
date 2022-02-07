@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css"
+      /> -->
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="weui.min.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page__hd">
+        <h1 class="page__title">Dialog</h1>
+        <p class="page__desc">要求用户点击我知道了以后，再执行弹框关闭提示</p>
+      </div>
+      <div class="page__bd page__bd_spacing">
+        <a
+          href="javascript:"
+          role="button"
+          class="weui-btn weui-btn_default"
+          id="showIOSDialog"
+          >iOS Dialog样式</a
+        >
+      </div>
+
+      <div id="dialogs">
+        <div
+          class="js_dialog"
+          role="dialog"
+          aria-hidden="true"
+          aria-modal="true"
+          aria-labelledby="js_title2"
+          id="iosDialog"
+          style="display: none"
+        >
+          <div class="weui-mask"></div>
+          <div class="weui-dialog">
+            <div class="weui-dialog__bd">弹窗内容</div>
+            <div class="weui-dialog__ft">
+              <a
+                role="button"
+                href="javascript:"
+                class="weui-dialog__btn weui-dialog__btn_primary"
+                >知道了</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+  var $iosDialog = $("#iosDialog");
+
+  // ==========禁止修改 起始==========
+  // 我知道了 点击函数
+  $("#dialogs").on("click", ".weui-dialog__btn", function () {
+    $(this).parents(".js_dialog").fadeOut(200);
+    console.log("点击了我知道了");
+  });
+  // ==========禁止修改 结束==========
+
+  // 要求用户点击我知道了以后，再执行弹框关闭提示
+  $("#showIOSDialog").on("click", async function () {
+    console.log("打开弹框");
+
+    // 打开回调
+    $iosDialog.fadeIn(200);
+    await new Promise((res) => {
+      // $("#dialogs").on("click", ".weui-dialog__btn", function () {
+      //   res();
+      // });
+      $(".weui-dialog__btn").on("click", () => {
+        res();
+      });
+    });
+
+    // ==========禁止修改 起始==========
+    console.log("弹框关闭");
+    // ==========禁止修改 结束==========
+  });
+</script>
