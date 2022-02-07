@@ -57,30 +57,24 @@
   </body>
 </html>
 <script type="text/javascript">
-  var $iosDialog = $("#iosDialog");
-
-  // 禁止修改 我知道了 点击函数
-  $("#dialogs").on("click", ".weui-dialog__btn", function () {
+  // 我知道了 点击函数
+  async function fooIKnow() {
     $(this).parents(".js_dialog").fadeOut(200);
-    console.log("点击了我知道了");
-  });
+    await new Promise((res) => {
+      setTimeout(() => {
+        console.log("点击了我知道了");
+        res();
+      }, 200);
+    });
+    console.log("关闭弹框");
+  }
 
-  // ==========
+  $("#dialogs").on("click", ".weui-dialog__btn", fooIKnow);
 
   // 要求用户点击我知道了以后，再执行弹框关闭提示
   $("#showIOSDialog").on("click", function () {
     console.log("打开弹框");
-
-    // 打开回调
-    $iosDialog.fadeIn(200);
-    document
-      .querySelector(".weui-dialog__btn")
-      .addEventListener("click", function () {
-        
-      });
-      
-    setTimeout(() => {
-      console.log("弹框关闭");
-    }, 0);
+    // 打开
+    $("#iosDialog").fadeIn(200);
   });
 </script>
