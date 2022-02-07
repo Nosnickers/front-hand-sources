@@ -6,6 +6,7 @@ const list = [
   { id: 5, name: "part5", pid: 4 },
 ];
 
+// https://juejin.cn/post/6983904373508145189
 function arrayToTree(items) {
   const result = []; // 存放结果集
   const itemMap = {}; //
