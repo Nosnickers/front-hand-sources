@@ -1,1 +1,1 @@
-# 考察setState与promise
+# 考察setState多个state时的渲染合并问题

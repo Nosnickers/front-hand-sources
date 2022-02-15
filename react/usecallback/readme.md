@@ -21,7 +21,8 @@ function App() {
     requestB(b1, b2); // 当`a1`,`a2`变化后`reqB`中的`reqA`其实是过时的。
   }, [b1, b2]); // 当然，把`reqA`加到`reqB`的依赖数组里不就好了？
   // 但你在调用`reqA`这个函数的时候，
-  // 你怎么知道「应该」要加到依赖数组里呢？
+  // 你怎么知道「应该」要加到依赖数组里呢？ ===> 遇事不决用useRef解决
+  
   return (
     <>
       <Comp onClick={reqA}></Comp>
