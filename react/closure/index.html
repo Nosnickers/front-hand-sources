@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="../js/react17/react.development.js"></script>
+    <script src="../js/react17/react-dom.development.js"></script>
+    <script src="../js/react17/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useEffect, useState, useCallback } = React;
+      function Cmp() {
+        const [a, setA] = useState(3);
+        const delayFoo = async () => {
+          console.log("delayFoo", a);
+          await new Promise((res) => {
+            setA((tmp) => {
+              return tmp + 3;
+            });
+            res();
+          });
+        };
+        useEffect(() => {
+          setA(16);
+          delayFoo();
+        }, []);
+        const callbackFoo = useCallback(async () => {
+          console.log("callbackFoo", a);
+          await new Promise((res) => {
+            setA((tmp) => {
+              return tmp + 3;
+            });
+            res();
+          });
+        }, []);
+
+        return (
+          <div>
+            <span>{`${a}`}</span>
+            <button onClick={delayFoo}>按钮1</button>
+            <button onClick={callbackFoo}>按钮2</button>
+          </div>
+        );
+      }
+      ReactDOM.render(<Cmp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
