@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="../js/react16.8.6/umd/react.development.js"></script>
+    <script src="../js/react16.8.6/umd/react-dom.development.js"></script>
+    <script src="../js/react16.8.6/umd/babel.6.26.0.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"></script> -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      console.time("time");
+      const { useEffect, useState, useRef,Suspense } = React;
+      function Sub(props) {
+        const [first, setFirst] = useState();
+        useEffect(() => {
+          setTimeout(() => {
+            setFirst(props.count)
+          }, 3000);
+        }, []);
+        
+        return <div className="sub">I am sub, count is {first}</div>;
+      }
+      const App = () => {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+          setInterval(() => {
+            setCount((count) => count + 1);
+          }, 1000);
+        }, []);
+
+        return (
+          <div>
+            <Suspense fallback={<div>loading...</div>}>
+              <Sub count={count} />
+            </Suspense>
+            <div>count is {count}</div>
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
