@@ -11,3 +11,5 @@ new Promise((resolve) => {
 })
   .then((o) => console.log(o))
   .then(() => console.log(6));
+
+// 0 1 3 2  4 5  6
