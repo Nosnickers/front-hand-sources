@@ -58,9 +58,9 @@
 </html>
 <script type="text/javascript">
   // 我知道了 点击函数
-  async function fooIKnow() {
+  function fooIKnow() {
     $(this).parents(".js_dialog").fadeOut(200);
-    await new Promise((res) => {
+    new Promise((res) => {
       setTimeout(() => {
         console.log("点击了我知道了");
         res();
